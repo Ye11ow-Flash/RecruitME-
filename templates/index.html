@@ -11,6 +11,9 @@
       <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/profile.css') }}">
       <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/sidenav.css') }}">
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
 
   <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
 </head>
@@ -91,8 +94,9 @@
               			<h4>Experience </h4>
               		</div>
               		<div class="col-2">
-              			<select name="exp">
+              			<select name="exp" id="exp" onchange="load()">
               				<option value="0">0</option>
+                      <option value="1">1+</option>
               				<option value="2">2+</option>
               				<option value="5">5+</option>
               				<option value="10">10+</option>
@@ -106,10 +110,57 @@
               			<h4>Skils </h4>
               		</div>
               		<div class="col-2">
-              			<select name="exp">
-              				<option value="0">Html</option>
-              				<option value="0">Css</option>
-              				<option value="0">Python</option>
+              			<select name="exp" id="skill" onchange="load()">
+                      <option value=''>Select Option</option>
+              				<option value='Algorithms'>Algorithms</option>
+                      <option value='Anaconda'>Anaconda</option>
+                      <option value='Android'>Android</option>
+                      <option value='Apis'>Apis</option>
+                      <option value='Autocad'>Autocad</option>
+                      <option value='Aws'>Aws</option>
+                      <option value='C'>C</option>
+                      <option value='C#'>C#</option>
+                      <option value='C++'>C++</option>
+                      <option value='Css'>Css</option>
+                      <option value='Database'>Database</option>
+                      <option value='Django'>Django</option>
+                      <option value='Excel'>Excel</option>
+                      <option value='Flask'>Flask</option>
+                      <option value='Github'>Github</option>
+                      <option value='Html'>Html</option>
+                      <option value='Html5'>Html5</option>
+                      <option value='Illustrator'>Illustrator</option>
+                      <option value='Java'>Java</option>
+                      <option value='Javascript'>Javascript</option>
+                      <option value='Jsp'>Jsp</option>
+                      <option value='Jupyter'>Jupyter</option>
+                      <option value='Keras'>Keras</option>
+                      <option value='Linux'>Linux</option>
+                      <option value='Matlab'>Matlab</option>
+                      <option value='Mobile'>Mobile</option>
+                      <option value='Mysql'>Mysql</option>
+                      <option value='Nltk'>Nltk</option>
+                      <option value='Nosql'>Nosql</option>
+                      <option value='Oracle'>Oracle</option>
+                      <option value='Pandas'>Pandas</option>
+                      <option value='Photoshop'>Photoshop</option>
+                      <option value='Php'>Php</option>
+                      <option value='Postgresql'>Postgresql</option>
+                      <option value='Product'>Product</option>
+                      <option value='Python'>Python</option>
+                      <option value='Pytorch'>Pytorch</option>
+                      <option value='R'>R</option>
+                      <option value='Rest'>Rest</option>
+                      <option value='Selenium'>Selenium</option>
+                      <option value='Sketch'>Sketch</option>
+                      <option value='Sql'>Sql</option>
+                      <option value='Swift'>Swift</option>
+                      <option value='Tensorflow'>Tensorflow</option>
+                      <option value='Testing'>Testing</option>
+                      <option value='Ubuntu'>Ubuntu</option>
+                      <option value='Ui'>Ui</option>
+                      <option value='Wordpress'>Wordpress</option>
+
 
 
               				
@@ -123,18 +174,19 @@
               			<h4>POST </h4>
               		</div>
               		<div class="col-4">
-              			<select name="postjob">
-              				<option class="0" >IOT Engineer</option>
-              				<option class="1" >Software Engineer</option>
-              				<option class="2" >Frontend Developer</option>
-              				<option class="3" >Backend Developer</option>
-              				<option class="4" >Web Developer</option>
-              				<option class="5" >Mobile App Developer</option>
-              				<option class="6" >Database Administrator</option>
-              				<option class="7" >Network Engineer</option>
-              				<option class="8" >Machine Learning</option>
-              				<option class="9" >Cloud Engineer</option>
-              				
+              			<select name="postjob" id="postjob" onchange="load()">
+                      <option id="0" value="0">All</option>
+              				<option id="1" value="1">IOT Engineer</option>
+              				<option id="2" value="2">Software Engineer</option>
+              				<option id="3" value="3">Frontend Developer</option>
+              				<option id="4" value="4">Backend Developer</option>
+              				<option id="5" value="5">Web Developer</option>
+              				<option id="6" value="6">Mobile App Developer</option>
+                      <option id="7" value="7">UI Developer</option>
+              				<option id="8" value="8">Database Administrator</option>
+              				<option id="9" value="9">Network Engineer</option>
+              				<option id="10" value="10">Machine Learning</option>
+              				<option id="11" value="11">Cloud Engineer</option>
               			</select>	
               		</div>
               	</div>
@@ -143,6 +195,7 @@
             </div>
           </div>
         </div>
+
 
         <div class="col-xl-8 order-xl-1">
           <div class="card bg-secondary shadow">
@@ -158,54 +211,72 @@
             </div>
             <div class="card-body" style="background-color: #4a4a8c">
 
-				<div class="card" >
-					<div class="card-body">
-						<div class="row">
-							<div class="col-8">
-								<h3>User Name</h3>
-							</div>
-							<div class="col-4 text-right">
-								<h3>2+ Years</h3>
-							</div>
-						</div>
+          <div id = "cand_data"></div>
 
-							<p class="card-text">
-								add user bio here With supporting text below as a 
-								natural lead-in to additional content.
-							</p>
-							<a href="#" class="btn btn-primary">Add user to list</a>
-					</div>
-				</div>
-				<br>
-				<div class="card" >
-					<div class="card-body">
-						<div class="row">
-							<div class="col-8">
-								<h3>User Name</h3>
-							</div>
-							<div class="col-4 text-right">
-								<h3>2+ Years</h3>
-							</div>
-						</div>
-
-							<p class="card-text">
-								add user bio here With supporting text below as a 
-								natural lead-in to additional content.
-							</p>
-							<a href="#" class="btn btn-primary">Add user to list</a>
-					</div>
-				</div>
-				<br>
-			</div>
+				
+			
+			
+			     </div>
             </div>
           </div>
         </div>
 
       </div>
       <br><br>
+
     </div>
   </div>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+  <script type="text/javascript">
+    
+    var url = "http://localhost:5000";
+
+
+    function get_html(avg_rating, experience, resume, username, emailid) {
+        
+        return '<div class="card" ><div class="card-body"><div class="row"><div class="col-8"><a href="/profile?username='+username+'"><h3>'+username+'</h3></a></div><div class="col-4 text-right"><h3>'+experience+' Years</h3></div></div><a href="#" class="btn btn-primary">Add user to list</a></div></div><br>'
+
+    }
+
+
+    function load() {
+
+      var position = document.getElementById("postjob").value;  
+      var experience = document.getElementById("exp").value;  
+      var skill = document.getElementById("skill").value;  
+      
+      if(position == "0") {
+        position = "";
+      }
+
+
+      $.getJSON(url+"/load_data?position="+position+"&experience="+experience+"&skill="+skill,
+
+            function(data,textStatus,jqXHR) {
+              
+              document.getElementById("cand_data").innerHTML = "";
+
+              for(var row_no in data["data"]) {
+        
+                var avg_rating = data["data"][row_no][0];
+                var experience = data["data"][row_no][1];
+                var resume = data["data"][row_no][2];
+                var username = data["data"][row_no][3];
+                var emailid = data["data"][row_no][4];
+
+                document.getElementById("cand_data").innerHTML += get_html(avg_rating, experience, resume, username, emailid);
+              }
+              
+
+            }
+        
+        );
+    }
+
+    load();
+
+  </script>
 
 </body>
 
