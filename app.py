@@ -10,7 +10,7 @@ import json
 import os
 import shutil
 from math import ceil
-
+from Naive_Bayes import *
 
 
 
@@ -80,26 +80,51 @@ def demo():
 	return render_template("demo.html")
 
 
+def get_query(condition):
+
+  arr = [0 for i in range(len(s_skills))]
+
+  for i in condition:
+    if i in d_skills.keys():
+      arr[d_skills[i]] = 1
+
+  return arr
+
+
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
 
 	username = request.form["username"]
 
 	data = load(user)
+	model = load("data/model.json")
 
-	try:	
+	if True:	
 		if request.method == 'POST':
 			f = request.files['file']
-			f.save(secure_filename(f.filename))
-			shutil.move(secure_filename(f.filename), "data/")
+			#f.save(secure_filename(f.filename))
+			#shutil.move(secure_filename(f.filename), "data/")
+			print(1111)
 			resume = ResumeParser("data/"+secure_filename(f.filename)).get_extracted_data()
+			print(resume)
+			model = load("data/model.json")
+			print(1)
+			nb = [Naive_Bayes(model[str(i)]) for i in range(11)]
+			print(2)
+			print(nb)
+			predictions = [nb[i].predict(get_query(resume["skills"])) for i in range(11)]
+			data[username]["rating"] = predictions 
+			summ = 0
+			for i in predictions:
+				summ += i[1]
+			data[username]["avg_rating"] = summ/11
 
 			data[username]["resume"] = secure_filename(f.filename)
 			data[username]["skills"] = resume["skills"]
 			data[username]["total_experience"] = resume["total_experience"]
 			dump(user, data)
 			#os.system("mv ")
-	except:
+	else:
 		pass
 
 	return render_template("demo.html", username = username, mobile = data[username]["mobile"], emailid = data[username]["emailid"])
@@ -116,6 +141,13 @@ def rectlogin():
 @app.route("/postjob")
 def postjob():
 	return render_template("postjob.html")
+
+@app.route("/profile")
+def profile():
+	username = request.args.get("username")
+	data = load(user)
+	print(data[username])
+	return render_template("profile.html", username = username, mobile = data[username]["mobile"], emailid = data[username]["emailid"])
 
 
 @app.route("/load_data")
