@@ -21,7 +21,7 @@
       <div class="sidenav">
         <div align="center" class="logo" style="font-family: 'Pacifico', cursive; font-size: 36px;">Recruitme-</div>
         <hr>
-        <a href="../dashboard"><i class="glyphicon glyphicon-dashboard"></i>  Dashboard</a>
+        <a href="../search"><i class="glyphicon glyphicon-dashboard"></i>  Resume Search</a>
         <a href="../expense"><i class="glyphicon glyphicon-usd"></i> Expense</a>
         <a href="../future"><i class="glyphicon glyphicon-send"></i> Future</a>
       </div>
@@ -152,7 +152,11 @@
                   <div class="col-md-6">
                       <div class="Contact">
                         <h3> Job Type</h3>
-                        <input name="mob" type="number" class="infor" value="<%= details.mobile %>"/>
+                        <select name="cat" class="infor">
+                        <option>Fulltime</option>
+                        <option>Parttime</option>                        
+                        <option>Internship</option>                        
+                      </select>
                       </div>
                     </div>
                   <!-- <div class="col-md-6">
@@ -187,7 +191,7 @@
                 <br>
                 <div class="row">
                     <div class="col-7 text-right">
-                      <button class="btn btn-primary" type="submit">Update</button>
+                      <button class="btn btn-primary" type="submit">Post</button>
                     </div>   
                 </div>                        
               </form>

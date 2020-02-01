@@ -19,7 +19,7 @@ def rectlogin():
 
 @app.route("/postjob")
 def postjob():
-	return render_template("demo.html")
+	return render_template("postjob.html")
 
 @app.route("/demo")
 def demo():
