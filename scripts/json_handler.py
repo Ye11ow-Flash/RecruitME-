@@ -37,7 +37,7 @@ def signup_user(username, password, mobile, emailid, t):
 	data = load(user)
 	print(1111)
 
-	data[username] = {"password":password, "mobile":mobile, "emailid":emailid, "t":t}
+	data[username] = {"password":password, "mobile":mobile, "emailid":emailid, "t":t, "resume":""}
 
 	dump(user, data)
 
