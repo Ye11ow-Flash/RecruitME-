@@ -21,8 +21,8 @@
       <div class="sidenav">
         <div align="center" class="logo" style="font-family: 'Pacifico', cursive; font-size: 36px;">Recruitme-</div>
         <hr>
-        <a href="../dashboard"><i class="glyphicon glyphicon-dashboard"></i>  Dashboard</a>
-        <a href="../expense"><i class="glyphicon glyphicon-usd"></i> Expense</a>
+        <a href="../dashboard"><i class="glyphicon glyphicon-dashboard"></i>  Resume Search </a>
+        <a href="../postjob"><i class="glyphicon glyphicon-usd"></i> Post Job</a>
         <a href="../future"><i class="glyphicon glyphicon-send"></i> Future</a>
       </div>
       
@@ -35,7 +35,7 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">Job Profile</a>
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="../index.html">Filter Job Candidate</a>
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
           <div class="form-group mb-0">
@@ -76,28 +76,12 @@
       <div class="row">
         <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
           <div class="card card-profile shadow">
-            <div class="row justify-content-center">
-              <div class="col-lg-3 order-lg-2">
-                <div class="card-profile-image">
-                  <a href="#">
-                    <img src="../static/img/admin.png" class="rounded-circle">
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-              <div class="d-flex justify-content-between">
-                <a href="#" class="btn btn-sm btn-info mr-4">Connect</a>
-                <a href="#" class="btn btn-sm btn-default float-right">Message</a>
-              </div>
-            </div>
+            
             <div class="card-body pt-0 pt-md-4">
-              <br>
-              <br>
+              
               <div class="text-center">
                 <h3>
-                  Sangram
+                  Choose the Filter
                 </h3>
               </div>
             </div>
@@ -116,81 +100,47 @@
                 </div>
               </div>
             </div>
-            <div class="card-body">
-            <form action="/updateProfile" method="POST">
-                <h6 class="heading-small text-muted mb-4">Job information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="Contact">
-                        <h3> Post Name </h3>
-                        <select name="cat" class="infor">
-                        <option>Software Engineer</option>
-                        <option>Network Admin</option>                        
-                        <option>Web Developer</option>                        
-                        <option>Android Develper</option> 
-                        <option>Full stack</option>                       
-                        <option>DataBase Admin</option>                         
-                      </select>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="Contact">
-                        <h3> Company Name </h3>
-                        <input name="lname" type="text" class="infor" value=""/>
-                      </div>
-                    </div>
-                  </div>
-                  <br>
-                  <div class="row">
-                  <div class="col-md-6">
-                    <div class="Contact">
-                      <h3> Job Location </h3>
-                      <input name="uname" type="text" class="infor" value=""/>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                      <div class="Contact">
-                        <h3> Job Type</h3>
-                        <input name="mob" type="number" class="infor" value="<%= details.mobile %>"/>
-                      </div>
-                    </div>
-                  <!-- <div class="col-md-6">
-                    <div class="Contact">
-                      <h3> Email </h3>
-                      <p class="infor"> Sang@gmail.com </p>
-                    </div>
-                  </div> -->
-                </div>
-                </div>
-                <hr class="my-4" />
-                <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">Other information</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="Contact">
-                        <h3> Date </h3>
-                        <input name="date" type="date" class="infor"/>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="Contact">
-                        <h3> Monthly Salary </h3>
-                        <input name="salary" type="number" class="infor" value="<%= details.salary %>"/>
-                      </div>
-                    </div>
-                  </div>
+            <div class="card-body" style="background-color: #4a4a8c">
 
-                </div>
-                <br>
-                <br>
-                <div class="row">
-                    <div class="col-7 text-right">
-                      <button class="btn btn-primary" type="submit">Update</button>
-                    </div>   
-                </div>                        
-              </form>
+				<div class="card" >
+					<div class="card-body">
+						<div class="row">
+							<div class="col-8">
+								<h3>User Name</h3>
+							</div>
+							<div class="col-4 text-right">
+								<h3>2+ Years</h3>
+							</div>
+						</div>
+
+							<p class="card-text">
+								add user bio here With supporting text below as a 
+								natural lead-in to additional content.
+							</p>
+							<a href="#" class="btn btn-primary">Add user to list</a>
+					</div>
+				</div>
+				<br>
+				<div class="card" >
+					<div class="card-body">
+						<div class="row">
+							<div class="col-8">
+								<h3>User Name</h3>
+							</div>
+							<div class="col-4 text-right">
+								<h3>2+ Years</h3>
+							</div>
+						</div>
+
+							<p class="card-text">
+								add user bio here With supporting text below as a 
+								natural lead-in to additional content.
+							</p>
+							<a href="#" class="btn btn-primary">Add user to list</a>
+					</div>
+				</div>
+				<br>
+			</div>
             </div>
           </div>
         </div>

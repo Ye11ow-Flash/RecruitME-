@@ -5,13 +5,20 @@ import json
 
 app = Flask(__name__)
 
-@app.route("/index")
-def index():
-	return render_template("index.html")
-
+#for candidate
 @app.route("/login")
 def login():
 	return render_template("login.html")
+
+@app.route("/demo")
+def demo():
+	return render_template("demo.html")
+
+
+#for recruter
+@app.route("/index")
+def index():
+	return render_template("index.html")
 
 @app.route("/rectlogin")
 def rectlogin():
@@ -20,10 +27,6 @@ def rectlogin():
 @app.route("/postjob")
 def postjob():
 	return render_template("postjob.html")
-
-@app.route("/demo")
-def demo():
-	return render_template("demo.html")
 
 if __name__ == "__main__":
    	app.run(debug = True)
