@@ -1,14 +1,22 @@
 from flask import Flask, render_template, url_for, request, jsonify, redirect
+from flask_cors import CORS, cross_origin
 from werkzeug import secure_filename
 from scripts.json_handler import *
+import nltk
+nltk.download("stopwords")
+from pyresparser import ResumeParser
 import requests
 import json
 import os
 import shutil
+from math import ceil
+
+
 
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = "data"
+CORS(app)
 
 
 
@@ -84,8 +92,11 @@ def upload_file():
 			f = request.files['file']
 			f.save(secure_filename(f.filename))
 			shutil.move(secure_filename(f.filename), "data/")
+			resume = ResumeParser("data/"+secure_filename(f.filename)).get_extracted_data()
 
 			data[username]["resume"] = secure_filename(f.filename)
+			data[username]["skills"] = resume["skills"]
+			data[username]["total_experience"] = resume["total_experience"]
 			dump(user, data)
 			#os.system("mv ")
 	except:
@@ -105,6 +116,60 @@ def rectlogin():
 @app.route("/postjob")
 def postjob():
 	return render_template("postjob.html")
+
+
+@app.route("/load_data")
+def load_data():
+
+	try:
+		experience = int(request.args.get("experience"))
+	except:
+		experience = 0
+	position = request.args.get("position")
+	skill = request.args.get("skill")
+
+	print(position, experience, skill)
+
+	if position == "":
+
+		data1 = load(user)
+		data = {}
+		for i in data1.keys(): 
+			if data1[i]["t"] == 0 and data1[i]["total_experience "] >= experience:
+				if skill == "":
+					data[i] = data1[i]
+				elif skill in data1[i]["skills"]:
+					data[i] = data1[i]
+
+		arr = sorted([[data[i]["avg_rating"], ceil(data[i]["total_experience "]), data[i]["resume"], i, data[i]["emailid"]] for i in data.keys()], reverse=True)
+
+		return jsonify(data = arr)
+
+	else:
+
+		data1 = load(user)
+		data = {}
+		for i in data1.keys():
+			if data1[i]["t"] == 0 and data1[i]["total_experience "] >= experience:
+				if skill == "":
+					data[i] = data1[i]
+				elif skill in data1[i]["skills"]:
+					data[i] = data1[i]
+
+		arr = sorted([[data[i]["rating"][int(position)-1], ceil(data[i]["total_experience "]), data[i]["resume"], i, data[i]["emailid"]] for i in data.keys()], reverse=True)
+
+		return jsonify(data = arr)
+
+
+
+
+
+
+
+	#return render_template("index.html")
+	return ""
+
+
 
 if __name__ == "__main__":
    	app.run(debug = True)
