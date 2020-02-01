@@ -149,6 +149,22 @@ def profile():
 	print(data[username])
 	return render_template("profile.html", username = username, mobile = data[username]["mobile"], emailid = data[username]["emailid"])
 
+@app.route("/tempprofile")
+def tempprofile():
+	login_params = {'username': 'Ye11ow-Flash','password': ''}
+	username = "Ye11ow-Flash"
+	user = requests.get('https://api.github.com/users/'+username)
+	#user = requests.get('https://api.github.com/search/users/', params={'q':'sahil'})
+	user_json = json.loads(user.content or user.text)
+	#print(user_json)
+	repos = requests.get('https://api.github.com/users/'+username+'/repos', params={'type':'owner','sort':'pushed'})
+	repos_json = (json.loads(repos.content))
+	language=[]
+	# for i in repos_json:
+	# 	language.append(i['language'])
+	# print(language)
+	return render_template("profile.html",username=user_json["name"],follower=user_json["followers"],following=user_json["following"],totalrepo=user_json["public_repos"],language=language)
+
 
 @app.route("/load_data")
 def load_data():
