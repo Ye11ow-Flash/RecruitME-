@@ -166,7 +166,7 @@ def tempprofile():
 	language=set(language)
 	rating=codechef()
 	stack=stackoverflow()
-	return render_template("profile.html",username=user_json["name"],follower=user_json["followers"],following=user_json["following"],totalrepo=user_json["public_repos"],language=language,rating=rating,stack=stack)
+	return render_template("profile.html",username=user_json["name"],follower=user_json["followers"],following=user_json["following"],totalrepo=user_json["public_repos"],language=language,rating=rating,stack=stack, sl=len(stack))
 
 def codechef():
 	rating=[]
