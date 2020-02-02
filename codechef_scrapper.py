@@ -19,7 +19,7 @@ def get_codechef_rating(url):
   	# print(info[i])
   # print("-----------------------------------------------")
   print(info[67])
-  print(info[66])
+  print(info[66].split("")[0])
 
 
 

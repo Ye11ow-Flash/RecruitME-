@@ -93,8 +93,13 @@
               </div>
             </div>
             <div class="card-body pt-0 pt-md-4">
-              <br>
-              <br>
+              
+              <hr>
+              <div class="text-center">
+                <h1>
+                  Github
+                </h1>
+              </div>
               <div class="text-center">
                 <h3>
                   {{username}}
@@ -108,9 +113,36 @@
                 <div class="row">
                   <div class="col-4"> <h5>Followers Count</h5> </div>
                   <div class="col-4"> <h5>Following Count</h5> </div>
-                  <div class="col-4"> <h5>Total Repositories</h5> </div>
+                  <div class="col-4"> <h5>Total Repository</h5> </div>
                 </div>
-
+                <div class="text-center">
+                  <h3>
+                    Skills
+                  </h3>
+                </div>
+                <div class="row" class="text-center" style="margin: 5px;">
+                  {%for i in language%} 
+                      <button class="btn btn-sm btn-default" style="margin: 3px">{{i}}</button>
+                      
+                  {%endfor%} 
+                  
+                </div>
+                <hr>
+                <div class="text-center">
+                  <h1>
+                    CodeChef
+                  </h1>
+                </div>
+                <div class="row">
+                  <div class="col-4"> <h2>{{rating[0]}}</h2> </div>
+                  <div class="col-4"> <h2>{{rating[1]}}</h2> </div>
+                  <div class="col-4"> <h2>{{rating[2]}}</h2> </div>
+                </div>
+                <div class="row">
+                  <div class="col-4"> <h5>Rating</h5> </div>
+                  <div class="col-4"> <h5>Country Rank</h5> </div>
+                  <div class="col-4"> <h5>Global Rank</h5> </div>
+                </div>
               </div>
             </div>
           </div>
@@ -175,11 +207,14 @@
                 <br>
                 
                 <br>
-                <div class="row">
-                    <div class="col-7 text-right">
-                      <button class="btn btn-primary" type="submit">Save</button>
-                    </div>   
-                </div>                        
+                {%for i in range(0,len(stack),5)%} 
+                  <div class="row">
+                      <div class="col-4 text-center">
+                        {{stack[i]}}
+                      </div>   
+                  </div>
+                {%endfor%} 
+                                        
               </form>
             </div>
           </div>

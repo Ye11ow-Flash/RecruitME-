@@ -11,7 +11,7 @@ import os
 import shutil
 from math import ceil
 from Naive_Bayes import *
-
+from bs4 import BeautifulSoup
 
 
 app = Flask(__name__)
@@ -160,11 +160,60 @@ def tempprofile():
 	repos = requests.get('https://api.github.com/users/'+username+'/repos', params={'type':'owner','sort':'pushed'})
 	repos_json = (json.loads(repos.content))
 	language=[]
-	# for i in repos_json:
-	# 	language.append(i['language'])
-	# print(language)
-	return render_template("profile.html",username=user_json["name"],follower=user_json["followers"],following=user_json["following"],totalrepo=user_json["public_repos"],language=language)
+	for i in repos_json:
+		language.append(i['language'])
+	print(language)
+	language=set(language)
+	rating=codechef()
+	stack=stackoverflow()
+	return render_template("profile.html",username=user_json["name"],follower=user_json["followers"],following=user_json["following"],totalrepo=user_json["public_repos"],language=language,rating=rating,stack=stack)
 
+def codechef():
+	rating=[]
+	url = "https://www.codechef.com/users/ye11ow_flash"
+	source_code = requests.get(url)
+	plain_text=source_code.text
+	soup = BeautifulSoup(plain_text)
+	info=[]
+	for link in soup.findAll('div',{'class' : 'rating-number'}):
+		info.append(link.string)
+	print(info[0])
+	rating.append(info[0])
+	for link in soup.findAll('li'):
+		info.append(link.text)
+	print(info[67])
+	print(info[66])
+	rating.append(info[67].split()[0])
+	rating.append(info[66].split()[0])
+	return rating
+
+def stackoverflow():
+	url = "https://stackoverflow.com/users/10905798/sangram-desai"
+	source_code = requests.get(url)
+	plain_text=source_code.text
+	soup = BeautifulSoup(plain_text)
+	info=[]
+	# grid--cell ws-nowrap
+	for link in soup.findAll('div', class_ = 'profile-top-tags'):
+		info.append(link.text)
+		temp = soup.find('span', class_ = 'fc-medium fs-title')
+		# temp2 = soup.find('span', class_ = 'mr4 fw-bold tt-uppercase')
+		for j in temp:
+			info.append(j)
+
+
+	s = str(info)
+	# print(s)
+	skillset = []
+	sk = s.split('\\r')[0]
+	sk = sk.split('\\n')
+	for i in sk:
+		if i != '':
+			skillset.append(i)
+	skillset = skillset[1:]
+	skillset = skillset[0:4]+skillset[6:]
+	print(skillset)
+	return skillset
 
 @app.route("/load_data")
 def load_data():
