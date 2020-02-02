@@ -151,7 +151,7 @@ def profile():
 
 @app.route("/tempprofile")
 def tempprofile():
-	login_params = {'username': 'Ye11ow-Flash','password': ''}
+	login_params = {'username': 'atharva456','password': ''}
 	username = "Ye11ow-Flash"
 	user = requests.get('https://api.github.com/users/'+username)
 	#user = requests.get('https://api.github.com/search/users/', params={'q':'sahil'})
