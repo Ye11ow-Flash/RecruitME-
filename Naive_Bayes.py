@@ -42,7 +42,3 @@ for i in range(11):
   nb.append(Naive_Bayes(data, labels))
 """
 
-
-
-
-

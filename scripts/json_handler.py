@@ -32,12 +32,12 @@ def validate(username, password):
 	return True, data[username]
 
 
-def signup_user(username, password, mobile, emailid, t):
+def signup_user(username, password, mobile, emailid, github, stackoverflow, yocket, codechef, t):
 	print(username, password, mobile, emailid, t)
 	data = load(user)
 	print(1111)
 
-	data[username] = {"password":password, "mobile":mobile, "emailid":emailid, "t":t, "resume":""}
+	data[username] = {"password":password, "mobile":mobile, "emailid":emailid, "t":t, "resume":"", "avg_rating":-1, "rating":[[0, -1] for i in range(11)], "skills":[], "total_experience ":0, "stackoverflow":stackoverflow, "yocket":yocket, "codechef":codechef, "github":github}
 
 	dump(user, data)
 

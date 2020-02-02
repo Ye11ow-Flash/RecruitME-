@@ -59,7 +59,7 @@
                   <img alt="Image placeholder" src="../static/img/admin.png">
                 </p>
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <p class="mb-0 text-sm  font-weight-bold">Sangram</p>
+                  <p class="mb-0 text-sm  font-weight-bold">{{username}}</p>
                 </div>
               </div>
             </a>
@@ -90,7 +90,7 @@
               <hr>
               <form>
               	<div class="row">
-              		<div class="col-9">
+              		<div class="col-6">
               			<h4>Experience </h4>
               		</div>
               		<div class="col-2">
@@ -106,8 +106,8 @@
               	</div>
               	<br>
               	<div class="row">
-              		<div class="col-8">
-              			<h4>Skils </h4>
+              		<div class="col-6">
+              			<h4>Skill </h4>
               		</div>
               		<div class="col-2">
               			<select name="exp" id="skill" onchange="load()">
@@ -196,7 +196,7 @@
           </div>
         </div>
 
-
+        
         <div class="col-xl-8 order-xl-1">
           <div class="card bg-secondary shadow">
             <div class="card-header bg-white border-0">
@@ -235,7 +235,7 @@
 
     function get_html(avg_rating, experience, resume, username, emailid) {
         
-        return '<div class="card" ><div class="card-body"><div class="row"><div class="col-8"><a href="/profile?username='+username+'"><h3>'+username+'</h3></a></div><div class="col-4 text-right"><h3>'+experience+' Years</h3></div></div><a href="#" class="btn btn-primary">Add user to list</a></div></div><br>'
+        return '<div class="card" ><div class="card-body"><div class="row"><div class="col-8"><a href="/tempprofile?username='+username+'"><h3>'+username+'</h3></a></div><div class="col-4 text-right"><h3>'+experience+' Years</h3></div></div><a href="#" class="btn btn-primary">Add user to list</a></div></div><br>'
 
     }
 

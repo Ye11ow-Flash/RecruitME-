@@ -2,7 +2,7 @@ import requests
 import sys
 from bs4 import BeautifulSoup
 
-url = "https://stackoverflow.com/users/10905798/sangram-desai"
+url = "https://stackoverflow.com/users/1491895/barmar"
 def get_codeforces_rating(url):
   source_code = requests.get(url)
   plain_text=source_code.text
@@ -26,7 +26,6 @@ def get_codeforces_rating(url):
     if i != '':
       skillset.append(i)
   skillset = skillset[1:]
-  skillset = skillset[0:4]+skillset[6:]
   print(skillset)
 
   # final_skill = []

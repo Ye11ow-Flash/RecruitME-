@@ -1,7 +1,7 @@
 import requests
 import json
 from pprint import pprint
-userdetail={}
+
 def print_user_details(user_json):
     print("         DETAILS OF THE USER ")
     print("USERNAME : "+str(user_json['name']))
@@ -13,7 +13,8 @@ def print_user_details(user_json):
     print("FOLLOWING : "+str(user_json['following']))
     print("PUBLIC REPOS : "+str(user_json['public_repos']))
     print("PUBLIC GISTS : "+str(user_json['public_gists']))
- 
+    print()
+    print("*************************************************")
 
 def print_repo_details(repo):
     print("NAME : "+str(repo['name']))

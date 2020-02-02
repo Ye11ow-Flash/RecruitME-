@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, jsonify, redirect
+from flask import Flask, render_template, url_for, request, jsonify, redirect, send_file
 from flask_cors import CORS, cross_origin
 from werkzeug import secure_filename
 from scripts.json_handler import *
@@ -25,6 +25,7 @@ CORS(app)
 @app.route("/login")
 def login():
 	return render_template("login.html")
+	
 
 
 @app.route("/signin", methods=["GET", "POST"])
@@ -54,10 +55,14 @@ def signup_cand():
 	password = request.form["password"]
 	mobile = request.form["mobile"]
 	emailid = request.form["emailid"]
+	github = request.form["github"]
+	stackoverflow = request.form["stackoverflow"]
+	yocket = request.form["yocket"]
+	codechef = request.form["codechef"]	
 
-	signup_user(username, password, mobile, emailid, 0)
+	signup_user(username, password, mobile, emailid, github, stackoverflow, yocket, codechef, 0)
 
-	return render_template("demo.html")
+	return render_template("demo.html", uersname = username, mobile = mobile, emailid = emailid)
 
 
 
@@ -97,8 +102,38 @@ def upload_file():
 	username = request.form["username"]
 
 	data = load(user)
-	model = load("data/model.json")
 
+	f = request.files['file']
+	try:
+		f.save(secure_filename(f.filename))
+		shutil.move(secure_filename(f.filename), "data/")
+	except:
+		pass
+	"""
+	print(1234)
+	print("data/"+f.filename)
+	resume = ResumeParser("data/"+f.filename).get_extracted_data()
+	print(1234)
+	model = load("data/model.json")
+	nb = [Naive_Bayes(model[str(i)]) for i in range(11)]
+	print(4321)
+	predictions = [nb[i].predict(get_query(resume["skills"])) for i in range(11)]
+	data[username]["rating"] = predictions 
+	summ = 0
+	for i in predictions:
+		summ += i[1]
+	data[username]["avg_rating"] = summ/11
+
+	data[username]["resume"] = secure_filename(f.filename)
+	data[username]["skills"] = resume["skills"]
+	data[username]["total_experience"] = resume["total_experience"]
+	dump(user, data)
+	"""
+
+	#model = load("data/model.json")
+
+
+	"""
 	if True:	
 		if request.method == 'POST':
 			f = request.files['file']
@@ -126,7 +161,7 @@ def upload_file():
 			#os.system("mv ")
 	else:
 		pass
-
+	"""
 	return render_template("demo.html", username = username, mobile = data[username]["mobile"], emailid = data[username]["emailid"])
 
 #For Recruter
@@ -151,11 +186,22 @@ def profile():
 
 @app.route("/tempprofile")
 def tempprofile():
+	data = load(user)
+	username1 = request.args.get("username")
+	s_skills = set(['Html', 'Photoshop', 'Mobile', 'Pandas', 'Illustrator', 'Flask', 'Django', 'Nosql', 'Html5', 'Matlab', 'Jupyter', 'Postgresql', 'Keras', 'Css', 'Apis', 'C', 'Anaconda', 'Ui', 'Product', 'Sketch', 'Linux', 'Autocad', 'Excel', 'Jsp', 'Mysql', 'Python', 'Tensorflow', 'Javascript', 'Sql', 'Testing', 'Database', 'Wordpress', 'Selenium', 'Algorithms', 'Pytorch', 'Github', 'Php', 'Oracle', 'Rest', 'C#', 'C++', 'Java', 'Android', 'Ubuntu', 'Nltk', 'Aws', 'Swift', 'R'])
+	skills = []
+	for i in sorted(data[username1]["skills"]):
+		if i in s_skills:
+			skills.append(i)
 	login_params = {'username': 'atharva456','password': ''}
 	username = "Ye11ow-Flash"
-	user = requests.get('https://api.github.com/users/'+username)
+	try:
+		username = data[username1]["github"]
+	except:
+		pass
+	user1 = requests.get('https://api.github.com/users/'+username)
 	#user = requests.get('https://api.github.com/search/users/', params={'q':'sahil'})
-	user_json = json.loads(user.content or user.text)
+	user_json = json.loads(user1.content or user1.text)
 	#print(user_json)
 	repos = requests.get('https://api.github.com/users/'+username+'/repos', params={'type':'owner','sort':'pushed'})
 	repos_json = (json.loads(repos.content))
@@ -164,31 +210,41 @@ def tempprofile():
 		language.append(i['language'])
 	print(language)
 	language=set(language)
-	rating=codechef()
-	stack=stackoverflow()
-	return render_template("profile.html",username=user_json["name"],follower=user_json["followers"],following=user_json["following"],totalrepo=user_json["public_repos"],language=language,rating=rating,stack=stack, sl=len(stack))
+	c_url = "https://www.codechef.com/users/ye11ow_flash"
+	try:
+		c_url = data[username1]["codechef"]
+	except:
+		pass
+	rating=codechef(c_url)
+	s_url = "https://stackoverflow.com/users/10905798/sangram-desai"
+	try:
+		#s_url = data[username1]["stackoverflow"]
+		pass
+	except:
+		pass
+	stack=stackoverflow(s_url)
+	return render_template("profile.html",mobile = data[username1]["mobile"], emailid = data[username1]["emailid"],username=username1,follower=user_json["followers"],following=user_json["following"],totalrepo=user_json["public_repos"],language=language,rating=rating,stack=stack, sl=len(stack), skills=skills)
 
-def codechef():
+def codechef(url):
 	rating=[]
-	url = "https://www.codechef.com/users/ye11ow_flash"
 	source_code = requests.get(url)
 	plain_text=source_code.text
 	soup = BeautifulSoup(plain_text)
 	info=[]
 	for link in soup.findAll('div',{'class' : 'rating-number'}):
 		info.append(link.string)
-	print(info[0])
+	#print(info[0])
 	rating.append(info[0])
 	for link in soup.findAll('li'):
 		info.append(link.text)
-	print(info[67])
-	print(info[66])
+	#print(info[67])
+	#print(info[66])
 	rating.append(info[67].split()[0])
 	rating.append(info[66].split()[0])
 	return rating
 
-def stackoverflow():
-	url = "https://stackoverflow.com/users/10905798/sangram-desai"
+def stackoverflow(url):
+	#url = "https://stackoverflow.com/users/10905798/sangram-desai"
 	source_code = requests.get(url)
 	plain_text=source_code.text
 	soup = BeautifulSoup(plain_text)
@@ -198,6 +254,8 @@ def stackoverflow():
 		info.append(link.text)
 		temp = soup.find('span', class_ = 'fc-medium fs-title')
 		# temp2 = soup.find('span', class_ = 'mr4 fw-bold tt-uppercase')
+		if temp == None:
+			continue
 		for j in temp:
 			info.append(j)
 
@@ -214,6 +272,7 @@ def stackoverflow():
 	skillset = skillset[0:4]+skillset[6:]
 	print(skillset)
 	return skillset
+
 
 @app.route("/load_data")
 def load_data():
@@ -266,6 +325,15 @@ def load_data():
 	#return render_template("index.html")
 	return ""
 
+
+@app.route("/get_pdf", methods=["GET", "POST"])
+def get_pdf():
+	username = request.form["username"]
+	print(username,"username")
+	data =load(user)
+	print(data[username]["resume"])
+
+	return send_file('data/'+data[username]["resume"], as_attachment=True)
 
 
 if __name__ == "__main__":
